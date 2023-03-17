@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}The Bookstore{% endblock %}
+
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-4">Welcome to The Bookstore</h1>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Example row of columns -->
+    {% for book in books %}
+    <div class="storefront_book_display">
+        <a href="{% url 'book_details' book.id %}">
+            <img src="{{ MEDIA_URL }}{{ book.cover_image }}">
+            <span class="storefront_book_title">{{ book.title }}</span>
+            <span class="storefront_book_author">{{ book.author }}</span>
+        </a>
+        {% if request.user.is_authenticated %}
+        <span class="storefront_add_to_cart">
+            <a href="{% url 'add_to_cart' book.id %}"><input type="submit" id="btn-logic" class="btn btn-success"
+                    value="Add to Cart"></a>
+        </span>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+
+    <div class="toast">
+        <div class="toast-header">
+            <strong class="me-auto">Cart Item</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            <p>Some text inside the toast body</p>
+        </div>
+    </div>
+
+    <hr>
+
+</div> <!-- /container -->
+
+<script>
+    document.getElementById("btn-logic").onclick = function () {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl)
+        })
+        toastList.forEach(toast => toast.show())
+    }
+</script>
+{% endblock %}
