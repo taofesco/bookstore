@@ -1,30 +1,17 @@
-# The Attic - An Online Bookstore
-An Online Bookstore, made using the Django Framework, with some basic functionalities. Made for learning purposes :)
+# The Bookstore - An Online Bookstore
+
+An Online Bookstore, made using the Django Framework, with some basic functionalities :)
 
 #### Features
+
 1. Login-Logout System.
-2. Registration, both direct and through Facebook.
-3. Activation Mail sent at registration.
-4. Cart functionality.
+2. Registration.
+3. Cart functionality.
+4. Search functionality.
 
 #### How to Use
-    
-     git clone https://github.com/sarthakagarwal18/Django-Bookstore.git
+
+     git clone https://github.com/taofesco/bookstore.git
      pip install -r requirements.txt
      python manage.py runserver
-     Go to http://localhost:8000/store/
-
-#### Screenshots
-
-Home Screen
-![](/Screenshots/Home.png?raw=true)
-
-Cart
-![](/Screenshots/Cart.png?raw=true)
-
-Log In Screen
-![](/Screenshots/LogIn.png?raw=true)
-
-Registration Screen
-![](/Screenshots/Reg.png?raw=true)
-# bookstore
+     Go to http://localhost:8000/
