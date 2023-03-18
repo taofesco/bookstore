@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import User
+from account.models import MyUser
 
 
 class Author(models.Model):
@@ -24,17 +24,18 @@ class Book(models.Model):
     stock = models.IntegerField(default=0)
     cover_image = models.ImageField(
         upload_to=cover_upload_path, default='books/empty_cover.jpg')
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
 
 class Review(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, null=True)
     publish_date = models.DateField(default=timezone.now)
     text = models.TextField()
 
 
 class Cart(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE, null=True)
     active = models.BooleanField(default=True)
     order_date = models.DateField(null=True)
     payment_type = models.CharField(max_length=100, null=True)

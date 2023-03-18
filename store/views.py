@@ -1,8 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.postgres.search import SearchVector
 from .models import Book, Cart, BookOrder, Review
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
-from .forms import ReviewForm
+from .forms import ReviewForm, SearchForm
 from store import signals
 import logging
 
@@ -64,8 +66,10 @@ def add_to_cart(request, book_id):
                 cart.save()
             cart.add_to_cart(book_id)
         return redirect('cart')
+
     else:
-        return redirect('index')
+        # return redirect('index')
+        return HttpResponse("<script>alert('Login to continue')</script><script>window.location='/accounts'</script>")
 
 
 def remove_from_cart(request, book_id):
@@ -79,7 +83,7 @@ def remove_from_cart(request, book_id):
             cart.remove_from_cart(book_id)
         return redirect('cart')
     else:
-        return redirect('index')
+        return HttpResponse("<script>alert('Login to continue')</script><script>window.location='/accounts'</script>")
 
 
 def cart(request):
@@ -98,7 +102,7 @@ def cart(request):
         }
         return render(request, 'store/cart.html', context)
     else:
-        return redirect('index')
+        return HttpResponse("<script>alert('Login to continue')</script><script>window.location='/accounts'</script>")
 
 
 def complete_order(request):
@@ -108,7 +112,7 @@ def complete_order(request):
         total = 0
         for order in orders:
             total += (order.book.price * order.quantity)
-        message = "Success! Your order has been completed, and is being processed. Transaction made : $%s" % (
+        message = "Success! Your order has been completed, and is being processed. Transaction made : ₦%s" % (
             total)
         cart.active = False
         cart.order_date = timezone.now()
@@ -118,4 +122,38 @@ def complete_order(request):
         }
         return render(request, 'store/order_complete.html', context)
     else:
-        return redirect('index')
+        return HttpResponse("<script>alert('Login to continue')</script><script>window.location='/accounts'</script>")
+
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            if 'sort' in request.GET:
+                sort = request.GET.get('sort')
+                if sort == 'newest':
+                    results = Book.objects.annotate(
+                        search=SearchVector('title', 'author', 'description'),
+                    ).filter(search=query).order_by('-date_created')
+                elif sort == 'highest':
+                    results = Book.objects.annotate(
+                        search=SearchVector('title', 'author', 'description'),
+                    ).filter(search=query).order_by('-price')
+                elif sort == 'lowest':
+                    results = Book.objects.annotate(
+                        search=SearchVector('title', 'author', 'description'),
+                    ).filter(search=query).order_by('price')
+            else:
+                results = Book.objects.annotate(
+                    search=SearchVector('title', 'author', 'description'),
+                ).filter(search=query)
+
+    return render(request,
+                  'store/search.html',
+                  {'form': form,
+                   'query': query,
+                   'results': results})

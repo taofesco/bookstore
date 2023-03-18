@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls'), name='store'),
     # includes urls that the registartion model comes with
-    path('accounts/', include('registration.backends.default.urls')),
+    # path('accounts/', include('registration.backends.default.urls')),
+    path('accounts/', include('account.urls')),
 ]

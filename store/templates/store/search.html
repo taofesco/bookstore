@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-12 col-sm-12 align-items-center">
+
+			<div style="text-align:center">
+				<h3></h3>
+			</div>
+			<div class="cart_container">
+				<div class="card">
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<h5 class="card-title">Search results</h5>
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+								data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Sort by
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<a class="dropdown-item" href="?query={{query}}&sort=newest">Newest</a>
+								<a class="dropdown-item" href="?query={{query}}&sort=highest">Highest price</a>
+								<a class="dropdown-item" href="?query={{query}}&sort=lowest">Lowest price</a>
+							</div>
+
+						</div>
+					</div>
+					<div class="card-header">
+						<h6 class="d-flex justify-content-between align-items-center">
+							<span class="text-muted">Books containing "{{ query }}"</span>
+							<span class="badge badge-secondary badge-pill">
+								{% with results.count as total_results %}
+								Found {{ total_results }} book{{ total_results|pluralize }}
+								{% endwith %}
+							</span>
+						</h6>
+					</div>
+					<div class="card-body">
+
+						{% if query %}
+
+						{% for book in results %}
+						<div class="card px-2 mb-2">
+							<div class="cart_item">
+								<div class="cart_listing">
+									<h4><a href="{% url 'book_details' book.id %}">{{ book.title }}</a></h4>
+								</div>
+								<h6>₦{{ book.price }}</h6>
+								<p>{{ book.description|truncatewords:30 }}</p>
+							</div>
+						</div>
+						{% empty %}
+						<p>There are no results for your query.</p>
+						{% endfor %}
+						<p><a class="btn btn-primary" href="{% url 'post_search' %}">Search again</a></p>
+						{% else %}
+						<h1>Search for books</h1>
+						<form action="." method="get">
+							{{ form.as_p }}
+							<input type="submit" value="Search">
+						</form>
+						{% endif %}
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

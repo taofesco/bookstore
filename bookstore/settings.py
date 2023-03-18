@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-^he6xzvm%7_hv*c82&f28yb1m6b&-f-(x6esw5dnrxiynx(w0s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store',
-    'registration',
-    'bootstrap3',
-    'bootstrap_themes',
-    'compressor',
+    'account',
+    'django.contrib.postgres',
     'debug_toolbar',
+
 ]
+
+AUTH_USER_MODEL = 'account.MyUser'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,10 +83,21 @@ WSGI_APPLICATION = 'bookstore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'qvwmecma',
+        'USER': 'qvwmecma',
+        'PASSWORD': 'YFcOSjI-Hu_DPBt8SpMShdYIbOyFincT',
+        'HOST': "ruby.db.elephantsql.com",
     }
 }
 
@@ -139,6 +152,12 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'localhost:9200'
+    },
+}
 
 # Registration
 ACCOUNT_ACTIVATION_DAYS = 7

@@ -2,39 +2,53 @@
 {% load static %}
 
 {% block content %}
-<div class="col-md-8 col-md-offset-2 col-sm-12 maincontent align-items-center">
-	<div style="text-align:center;text-decoration:underline">
-		<h3>Your Cart</h3>
-	</div>
-	<div class="cart_container">
-		{% for item in cart %}
-		<div class="cart_item">
-			<div class="cart_listing">
-				<span class="title">{{ item.book.title }}</span> by {{ item.book.author.first_name }}
-				{{item.book.author.last_name }}
+
+
+<div class="container">
+	<div class="row my-5">
+		<div class="col-md-12 col-sm-12 align-items-center">
+
+			<div class="cart_container">
+				<h4 class="d-flex justify-content-between align-items-center mb-3">
+					<span class="text-muted">Cart item</span>
+					<span class="badge badge-secondary badge-pill">{{count}}</span>
+				</h4>
+				{% for item in cart %}
+				<ul class="list-group mb-3">
+					<li class="list-group-item d-flex justify-content-between lh-condensed">
+						<div class="row">
+							<img src="{{ MEDIA_URL }}{{ item.book.cover_image }}" width="100" height="100">
+							<div class="mx-2">
+								<h4 class="title">{{ item.book.title }}</h4> <br>
+								by {{ item.book.author.first_name}} {{item.book.author.last_name }}
+							</div>
+
+						</div>
+						<div class="cart_price">
+							<span class="cart_quantity">{{ item.quantity }} x ₦<span class="cart_value">
+									{{item.book.price}}</span></span>
+							Qty: <a href="{% url 'add_to_cart' item.book.id %}"><input type="submit" id="btn-logic"
+									class="btn btn-success" value="+"></a> / <a
+								href="{% url 'remove_from_cart' item.book.id %}"><input type="submit" id="btn-logic"
+									class="btn btn-success" value="-"></a>
+						</div>
+					</li>
+				</ul>
+
+				{% empty %}
+				<div>
+					There are no items in your cart.
+				</div>
+				{% endfor %}
+				<div class="cart_total mb-5">
+					<h4> Total: ₦<span class="cart_value">{{ total }}</span></h4>
+					{% if cart %}
+					<a href="{% url 'complete_order' %}"><input type="submit" id="btn-logic" class="btn btn-success"
+							value="Purchase"></a>
+					{% endif %}
+				</div>
 			</div>
-			<div class="cart_price">
-				<span class="cart_quantity">{{ item.quantity }} x ₦<span class="cart_value">
-						{{item.book.price}}</span></span>
-				Quantity: <a href="{% url 'add_to_cart' item.book.id %}"><input type="submit" id="btn-logic"
-						class="btn btn-success" value="+"></a> / <a
-					href="{% url 'remove_from_cart' item.book.id %}"><input type="submit" id="btn-logic"
-						class="btn btn-success" value="-"></a>
-			</div>
-		</div>
-		{% empty %}
-		<div>
-			There are no items in your cart.
-		</div>
-		{% endfor %}
-		<div class="cart_total">
-			<h4> Total: ₦<span class="cart_value">{{ total }}</span></h4>
-			{% if cart %}
-			<a href="{% url 'complete_order' %}"><input type="submit" id="btn-logic" class="btn btn-success"
-					value="Purchase"></a>
-			{% endif %}
 		</div>
 	</div>
-</div>
 </div>
 {% endblock %}

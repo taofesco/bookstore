@@ -4,44 +4,46 @@
 
 {% block content %}
 <!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <div class="container">
-        <h1 class="display-4">Welcome to The Bookstore</h1>
+<div class="jumbotron ">
+    <div class="container py-3 text-center">
+        <h1 class="display-4 ">Welcome to The Bookstore</h1>
     </div>
 </div>
 
-<div class="container">
-    <!-- Example row of columns -->
-    {% for book in books %}
-    <div class="storefront_book_display">
-        <a href="{% url 'book_details' book.id %}">
-            <img src="{{ MEDIA_URL }}{{ book.cover_image }}">
-            <span class="storefront_book_title">{{ book.title }}</span>
-            <span class="storefront_book_author">{{ book.author }}</span>
-        </a>
-        {% if request.user.is_authenticated %}
-        <span class="storefront_add_to_cart">
-            <a href="{% url 'add_to_cart' book.id %}"><input type="submit" id="btn-logic" class="btn btn-success"
-                    value="Add to Cart"></a>
-        </span>
-        {% endif %}
-    </div>
-    {% endfor %}
+<div class="album py-5">
+    <div class="container">
 
+        <div class="row">
+            {% for book in books %}
+            <div class="col-md-3">
+                <a href="{% url 'book_details' book.id %}">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="{{ MEDIA_URL }}{{ book.cover_image }}" width="100%" height="300">
 
-    <div class="toast">
-        <div class="toast-header">
-            <strong class="me-auto">Cart Item</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
-        </div>
-        <div class="toast-body">
-            <p>Some text inside the toast body</p>
+                        <div class="card-body">
+                            <h3 class="card-title">{{ book.title }}</h3>
+                            <h5 class="card-title">₦{{ book.price }}</h5>
+                            <p class="card-text">{{ book.description|truncatewords:10 }}</p>
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
         </div>
     </div>
+</div>
 
-    <hr>
+<div class="toast">
+    <div class="toast-header">
+        <strong class="me-auto">Cart Item</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+    </div>
+    <div class="toast-body">
+        <p>Some text inside the toast body</p>
+    </div>
+</div>
 
-</div> <!-- /container -->
 
 <script>
     document.getElementById("btn-logic").onclick = function () {

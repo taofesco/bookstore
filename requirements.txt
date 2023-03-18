@@ -13,8 +13,11 @@ django-bootstrap-themes==3.3.6
 django-bootstrap3==22.2
 django-compressor==4.3.1
 django-debug-toolbar==3.8.1
+django-elasticsearch-dsl==7.3
 django-registration-redux==2.12
 djangorestframework==3.14.0
+elasticsearch==7.17.9
+elasticsearch-dsl==7.4.1
 idna==3.4
 oauthlib==3.2.2
 Pillow==9.4.0
@@ -23,6 +26,7 @@ pycodestyle==2.10.0
 pycparser==2.21
 PyJWT==2.6.0
 pyOpenSSL==23.0.0
+python-dateutil==2.8.2
 python-social-auth==0.3.6
 python3-openid==3.2.0
 pytz==2022.7.1
