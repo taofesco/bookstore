@@ -8,9 +8,6 @@ cryptography==39.0.2
 defusedxml==0.7.1
 Django==4.1.7
 django-appconf==1.0.5
-django-bootstrap==0.2.4
-django-bootstrap-themes==3.3.6
-django-bootstrap3==22.2
 django-compressor==4.3.1
 django-debug-toolbar==3.8.1
 django-elasticsearch-dsl==7.3
