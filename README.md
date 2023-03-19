@@ -15,3 +15,8 @@ An Online Bookstore, made using the Django Framework, with some basic functional
      pip install -r requirements.txt
      python manage.py runserver
      Go to http://localhost:8000/
+
+#### How to add book from admin
+
+     Go to http://localhost:8000/admin
+     Login with detail username: taofesco and password 'hello@12'
