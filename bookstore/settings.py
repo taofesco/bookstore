@@ -83,23 +83,23 @@ WSGI_APPLICATION = 'bookstore.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'qvwmecma',
-        'USER': 'qvwmecma',
-        'PASSWORD': 'YFcOSjI-Hu_DPBt8SpMShdYIbOyFincT',
-        'HOST': "ruby.db.elephantsql.com",
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'qvwmecma',
+#         'USER': 'qvwmecma',
+#         'PASSWORD': 'YFcOSjI-Hu_DPBt8SpMShdYIbOyFincT',
+#         'HOST': "ruby.db.elephantsql.com",
+#     }
+# }
 
 
 # Password validation
@@ -165,28 +165,28 @@ REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = '/'
 
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'basic': {
-            'format': '%(asctime)s %(name)-20s %(levelname)-8s %(module)s | %(message)s'
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'formatter': 'basic',
-            'maxBytes': 10000,
-            'backupCount': 10,
-            'filename': BASE_DIR / 'bookstore.log',
-        },
-    },
-    'loggers': {
-        'store': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        },
-    }
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'formatters': {
+#         'basic': {
+#             'format': '%(asctime)s %(name)-20s %(levelname)-8s %(module)s | %(message)s'
+#         },
+#     },
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.handlers.RotatingFileHandler',
+#             'formatter': 'basic',
+#             'maxBytes': 10000,
+#             'backupCount': 10,
+#             'filename': BASE_DIR / 'bookstore.log',
+#         },
+#     },
+#     'loggers': {
+#         'store': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#         },
+#     }
+# }

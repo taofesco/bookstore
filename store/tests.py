@@ -1,29 +1,29 @@
 from django.test import TestCase
 from .models import Book, Author
-from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from account.models import MyUser
 from decimal import *
 
 
 class StoreViewsTestCase(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="sarthak",
+        self.user = MyUser.objects.create_user(
+            username="tao",
             email="test@email.com",
             password="password"
         )
         author = Author.objects.create(first_name="Stephen", last_name="King")
-        book = Book.objects.create(title="Cujo", author=author, description="Scary!", price=9.99, stock=1)
+        book = Book.objects.create(
+            title="Cujo", author=author, description="Scary!", price=9.99, stock=1)
 
     def test_index(self):
-        resp = self.client.get('/store/')
+        resp = self.client.get('/')
         self.assertEqual(resp.status_code, 200)
         self.assertTrue('books' in resp.context)
         self.assertTrue(resp.context['books'].count() > 0)
 
     def test_cart(self):
         resp = self.client.get('/cart/')
-        self.assertEqual(resp.status_code, 302)
+        self.assertEqual(resp.status_code, 200)
 
     def test_book_detail(self):
         resp = self.client.get('/book/1/')
@@ -34,7 +34,7 @@ class StoreViewsTestCase(TestCase):
         self.assertEqual(resp.status_code, 404)
 
     def test_add_to_cart(self):
-        self.logged_in = self.client.login(username="sarthak", password="password")
+        self.logged_in = self.client.login(username="tao", password="password")
         self.assertTrue(self.logged_in)
         resp = self.client.get('/add/1/')
         resp = self.client.get('/cart/')
